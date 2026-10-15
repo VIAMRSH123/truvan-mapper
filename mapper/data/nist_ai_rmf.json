@@ -1,0 +1,25 @@
+{
+  "framework": "NIST AI RMF 1.0 (AI 100-1) Core categories",
+  "note": "Category IDs with our own one-line paraphrase.",
+  "items": [
+    {"id": "GOVERN 1", "title": "Policies, processes and practices", "summary": "Organization-wide AI risk policies and practices are in place and transparent.", "keywords": ["policy", "governance", "process", "review", "legal", "regulatory"]},
+    {"id": "GOVERN 2", "title": "Accountability structures", "summary": "Right teams are assigned responsibility, empowered and trained.", "keywords": ["roles", "responsibilities", "accountability", "training", "competence"]},
+    {"id": "GOVERN 3", "title": "Workforce diversity and inclusion", "summary": "Diverse, inclusive teams take part in AI risk work.", "keywords": ["diversity", "inclusion", "accessibility", "staff"]},
+    {"id": "GOVERN 4", "title": "Risk-aware culture", "summary": "Teams consider and communicate AI risk.", "keywords": ["culture", "communication", "concerns", "safety"]},
+    {"id": "GOVERN 5", "title": "Engagement with external AI actors", "summary": "Feedback from external actors is gathered and used.", "keywords": ["feedback", "external", "stakeholders", "reporting", "concerns"]},
+    {"id": "GOVERN 6", "title": "Third-party risk policies", "summary": "Policies cover risks from third-party software, data and supply chain.", "keywords": ["third-party", "suppliers", "supply chain", "value chain", "tools"]},
+    {"id": "MAP 1", "title": "Context established", "summary": "Context and intended purpose of the AI system are understood.", "keywords": ["context", "intended", "purpose", "use", "requirements", "objectives"]},
+    {"id": "MAP 2", "title": "System categorization", "summary": "The system's tasks, methods and limits are categorized.", "keywords": ["categorization", "specification", "requirements", "limits"]},
+    {"id": "MAP 3", "title": "Capabilities, benefits and costs", "summary": "Capabilities, goals, benefits and costs are understood.", "keywords": ["capabilities", "benefits", "costs", "objectives"]},
+    {"id": "MAP 4", "title": "Component risk mapping", "summary": "Risks are mapped for all components, including third-party data and software.", "keywords": ["components", "third-party", "data", "tools", "resources"]},
+    {"id": "MAP 5", "title": "Impact characterization", "summary": "Impacts on individuals, groups, society are characterized.", "keywords": ["impact", "individuals", "groups", "societal", "society", "assessment"]},
+    {"id": "MEASURE 1", "title": "Methods and metrics", "summary": "Suitable measurement methods and metrics are chosen and applied.", "keywords": ["metrics", "measurement", "testing", "validation", "verification"]},
+    {"id": "MEASURE 2", "title": "Trustworthiness evaluation", "summary": "Systems are evaluated for trustworthy characteristics.", "keywords": ["evaluation", "testing", "accuracy", "robustness", "bias", "quality", "validation", "verification", "data"]},
+    {"id": "MEASURE 3", "title": "Risk tracking over time", "summary": "Mechanisms track identified risks over time.", "keywords": ["monitoring", "tracking", "operation", "post-market", "feedback"]},
+    {"id": "MEASURE 4", "title": "Measurement feedback", "summary": "Feedback on measurement efficacy is gathered.", "keywords": ["feedback", "measurement", "review"]},
+    {"id": "MANAGE 1", "title": "Risk prioritization and response", "summary": "Mapped and measured risks are prioritized and treated.", "keywords": ["risk", "treatment", "deployment", "decision"]},
+    {"id": "MANAGE 2", "title": "Benefit maximization, harm minimization", "summary": "Strategies maximize benefits and reduce negative impacts.", "keywords": ["benefits", "impact", "oversight", "deactivation", "use"]},
+    {"id": "MANAGE 3", "title": "Third-party risk management", "summary": "Risks from third-party entities are managed.", "keywords": ["third-party", "suppliers", "value chain", "monitoring"]},
+    {"id": "MANAGE 4", "title": "Response, recovery and communication", "summary": "Treatment, response, recovery and communication plans are documented and monitored.", "keywords": ["incidents", "communication", "recovery", "monitoring", "reporting"]}
+  ]
+}

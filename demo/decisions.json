@@ -1,0 +1,21 @@
+{
+  "A.6.2.4": [
+    {"action": "edit", "keep": [0, 2, 3],
+     "notes": "Dropped Art. 17: the QMS article sits at management-system level, not at this control."}
+  ],
+  "A.7.4": [
+    {"action": "approve"}
+  ],
+  "A.6.2.8": [
+    {"action": "approve", "notes": "No NIST category is specific to logging; leave NIST unmapped rather than force a weak link."}
+  ],
+  "A.9.4": [
+    {"action": "reject", "keep": [0, 1, 2],
+     "notes": "Keep Art. 26, Art. 13 and MAP 1. MANAGE 2 is too broad. Intended use should also tie to human oversight."},
+    {"action": "approve"}
+  ],
+  "A.8.4": [
+    {"action": "edit", "keep": [0, 1],
+     "notes": "GOVERN 4 is about internal culture, not incident communication."}
+  ]
+}
