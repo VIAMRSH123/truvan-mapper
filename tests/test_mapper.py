@@ -148,6 +148,32 @@ def test_ledger_detects_tampering(tmp_path):
     assert not ok and "seq 1" in msg
 
 
+def _two_entry_ledger(tmp_path):
+    path = tmp_path / "l.jsonl"
+    ledger = Ledger(path)
+    g = build_graph(FakeProposer([[GOOD], [GOOD2]]), ledger)
+    run(g, "A.6.2.4", [{"action": "approve"}])
+    run(g, "A.7.4", [{"action": "approve"}])
+    return ledger, path
+
+
+def test_verify_reports_truncated_line_instead_of_raising(tmp_path):
+    ledger, path = _two_entry_ledger(tmp_path)
+    lines = path.read_text().splitlines()
+    path.write_text(lines[0] + "\n" + lines[1][:40] + "\n")
+    ok, msg = ledger.verify()
+    assert not ok and "line 2" in msg and "not valid JSON" in msg
+
+
+def test_verify_reports_entry_missing_chain_fields(tmp_path):
+    ledger, path = _two_entry_ledger(tmp_path)
+    lines = path.read_text().splitlines()
+    second = json.loads(lines[1]); del second["prev_hash"]
+    path.write_text(lines[0] + "\n" + json.dumps(second) + "\n")
+    ok, msg = ledger.verify()
+    assert not ok and "line 2" in msg and "malformed" in msg
+
+
 def test_report_renders(tmp_path):
     ledger = Ledger(tmp_path / "l.jsonl")
     g = build_graph(FakeProposer([[GOOD, FAKE]]), ledger)

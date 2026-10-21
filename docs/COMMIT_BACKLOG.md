@@ -24,7 +24,7 @@ below was checked against the code on 2026-10-19 (baseline: 12 tests passing).
 
 ### A. Bugs found in the audit (fix first, with a regression test each)
 
-- [ ] **A1 — `Ledger.verify()` crashes on a damaged file instead of reporting it.** A truncated or
+- [x] **A1 — `Ledger.verify()` crashes on a damaged file instead of reporting it.** A truncated or
       garbled line (e.g. a crash mid-write) makes `entries()` raise `json.JSONDecodeError`, so
       `python -m mapper verify` dies with a traceback rather than printing a failure and exiting 1.
       An entry missing `prev_hash`/`hash`/`seq` raises `KeyError` the same way. A tamper-evident
@@ -89,3 +89,4 @@ Append one line per commit: `YYYY-MM-DD - <item id> - <commit subject>`. The lin
 commit as the work, so the sha isn't known yet; leave it out.
 
 - 2026-10-19 - setup - docs: add commit backlog from a verified audit of the repo
+- 2026-10-21 - A1 - fix: make Ledger.verify() report damaged ledger files instead of crashing

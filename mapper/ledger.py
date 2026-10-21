@@ -55,14 +55,29 @@ class Ledger:
         return entry
 
     def verify(self) -> tuple[bool, str]:
+        """Check the hash chain. Damaged files are reported, never raised."""
         prev = GENESIS
-        for e in self.entries():
-            if e["prev_hash"] != prev:
-                return False, f"chain broken before seq {e['seq']}"
-            if _digest(e) != e["hash"]:
-                return False, f"entry seq {e['seq']} was modified"
-            prev = e["hash"]
-        return True, f"{len(self.entries())} entries, chain intact"
+        count = 0
+        lines = self.path.read_text(encoding="utf-8").splitlines()
+        for lineno, line in enumerate(lines, start=1):
+            if not line.strip():
+                continue
+            try:
+                e = json.loads(line)
+                if not isinstance(e, dict):
+                    raise ValueError("not a JSON object")
+                seq, entry_prev, entry_hash = e["seq"], e["prev_hash"], e["hash"]
+            except json.JSONDecodeError as exc:
+                return False, f"line {lineno} is not valid JSON ({exc.msg})"
+            except (KeyError, ValueError) as exc:
+                return False, f"line {lineno} is malformed ({exc!r})"
+            if entry_prev != prev:
+                return False, f"chain broken before seq {seq}"
+            if _digest(e) != entry_hash:
+                return False, f"entry seq {seq} was modified"
+            prev = entry_hash
+            count += 1
+        return True, f"{count} entries, chain intact"
 
     def latest_by_control(self) -> dict[str, dict]:
         """Last decision per control (a later review supersedes an earlier one)."""

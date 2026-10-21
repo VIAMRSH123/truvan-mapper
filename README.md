@@ -48,7 +48,7 @@ python -m mapper run --decisions demo/decisions.json --reviewer VB
 python -m mapper run --controls all
 
 python -m mapper verify     # check the ledger hash chain
-python -m pytest -q         # 12 tests, no network needed
+python -m pytest -q         # 14 tests, no network needed
 ```
 
 Set `TRUVAN_MODEL` to change the Claude model.
