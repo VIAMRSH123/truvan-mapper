@@ -60,6 +60,13 @@ def test_validator_requires_rationale_and_fixes_bad_relation():
     assert valid[0]["relation"] == "supports"
 
 
+@pytest.mark.parametrize("bad", [float("nan"), float("inf"), float("-inf"), "nan", "inf"])
+def test_validator_treats_non_finite_confidence_as_zero(bad):
+    valid, _ = validate([{**GOOD, "confidence": bad}])
+    assert valid[0]["confidence"] == 0.0
+    json.loads(json.dumps(valid[0]), parse_constant=lambda c: pytest.fail(c))
+
+
 # ---------- human in the loop ----------
 
 def test_graph_pauses_and_writes_nothing_before_review(tmp_path):

@@ -30,7 +30,7 @@ below was checked against the code on 2026-10-19 (baseline: 12 tests passing).
       An entry missing `prev_hash`/`hash`/`seq` raises `KeyError` the same way. A tamper-evident
       ledger must fail *cleanly* on tampering. Make `verify()` return `(False, "...")` for both
       (naming the line number), keep `entries()` strict for normal reads, and test it.
-- [ ] **A2 — Validator lets `NaN` confidence through.** `float("nan")` survives
+- [x] **A2 — Validator lets `NaN` confidence through.** `float("nan")` survives
       `min(max(conf, 0.0), 1.0)` unchanged, so a `NaN` reaches the ledger (`json.dumps` emits the
       non-standard token `NaN`) and the report. Treat non-finite confidence as `0.0`, like the
       existing non-numeric handling. Add a test with `nan` and `inf`.
@@ -90,3 +90,4 @@ commit as the work, so the sha isn't known yet; leave it out.
 
 - 2026-10-19 - setup - docs: add commit backlog from a verified audit of the repo
 - 2026-10-21 - A1 - fix: make Ledger.verify() report damaged ledger files instead of crashing
+- 2026-10-31 - A2 - fix: treat non-finite confidence as 0.0 in the validator

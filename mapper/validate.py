@@ -6,6 +6,8 @@ reaches the reviewer unless its target ID exists in the shipped catalog.
 """
 from __future__ import annotations
 
+import math
+
 from . import catalog
 from .proposers import RELATIONS, Proposal
 
@@ -35,6 +37,8 @@ def validate(proposals: list[dict]) -> tuple[list[Proposal], list[dict]]:
         try:
             conf = float(p.get("confidence", 0))
         except (TypeError, ValueError):
+            conf = 0.0
+        if not math.isfinite(conf):      # NaN would survive min/max and reach the ledger as bare `NaN`
             conf = 0.0
         seen.add((fw, tid))
         valid.append(Proposal(
