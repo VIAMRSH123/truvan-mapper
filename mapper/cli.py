@@ -49,6 +49,9 @@ def _ask(payload: dict, reviewer: str) -> dict:
                 idx = [int(x) for x in keep.replace(" ", "").split(",") if x]
             except ValueError:
                 print("Numbers only."); continue
+            n = len(payload["proposals"])
+            if not idx or any(not 0 <= i < n for i in idx):
+                print(f"Pick at least one index between 0 and {n - 1}, or reject instead."); continue
             notes = input("Note (optional): ")
             return {"action": "edit", "keep": idx, "notes": notes, "reviewer": reviewer}
         if a == "r":
@@ -60,6 +63,8 @@ def _ask(payload: dict, reviewer: str) -> dict:
                 idx = [int(x) for x in keep.replace(" ", "").split(",") if x]
             except ValueError:
                 idx = []
+            n = len(payload["proposals"])
+            idx = [i for i in idx if 0 <= i < n]
             return {"action": "reject", "notes": notes, "keep": idx, "reviewer": reviewer}
 
 

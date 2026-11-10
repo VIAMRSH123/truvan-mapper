@@ -97,6 +97,27 @@ def test_edit_keeps_only_selected(tmp_path):
     assert [m["target_id"] for m in e["mappings"]] == ["MEASURE 2"]
 
 
+@pytest.mark.parametrize("keep", [[99, -1], [], [2], [-1], [True]])
+def test_edit_with_invalid_keep_is_refused(tmp_path, keep):
+    ledger = Ledger(tmp_path / "l.jsonl")
+    g = build_graph(FakeProposer([[GOOD, GOOD2]]), ledger)
+    cfg = {"configurable": {"thread_id": "A.6.2.4"}}
+    g.invoke({"control_id": "A.6.2.4"}, cfg)
+    with pytest.raises(ValueError):
+        g.invoke(Command(resume={"action": "edit", "keep": keep, "reviewer": "vb"}), cfg)
+    assert ledger.entries() == []                       # nothing recorded
+
+
+def test_reject_with_out_of_range_pin_is_refused(tmp_path):
+    ledger = Ledger(tmp_path / "l.jsonl")
+    g = build_graph(FakeProposer([[GOOD, GOOD2]]), ledger)
+    cfg = {"configurable": {"thread_id": "A.6.2.4"}}
+    g.invoke({"control_id": "A.6.2.4"}, cfg)
+    with pytest.raises(ValueError):
+        g.invoke(Command(resume={"action": "reject", "keep": [5], "notes": "redo"}), cfg)
+    assert ledger.entries() == []
+
+
 def test_reject_sends_feedback_and_exclusions_back(tmp_path):
     ledger = Ledger(tmp_path / "l.jsonl")
     fake = FakeProposer([[GOOD], [GOOD2]])

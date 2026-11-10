@@ -34,7 +34,7 @@ below was checked against the code on 2026-10-19 (baseline: 12 tests passing).
       `min(max(conf, 0.0), 1.0)` unchanged, so a `NaN` reaches the ledger (`json.dumps` emits the
       non-standard token `NaN`) and the report. Treat non-finite confidence as `0.0`, like the
       existing non-numeric handling. Add a test with `nan` and `inf`.
-- [ ] **A3 — `edit` with out-of-range or negative `keep` indexes silently saves an empty
+- [x] **A3 — `edit` with out-of-range or negative `keep` indexes silently saves an empty
       "edited" entry.** Verified: `keep: [99, -1]` on a 4-proposal control records status `edited`
       with zero mappings. Reject the decision (or ignore invalid indexes and refuse an empty edit)
       so a typo can't erase a control's mappings from the audit record. Cover `edit` and the
@@ -91,3 +91,4 @@ commit as the work, so the sha isn't known yet; leave it out.
 - 2026-10-19 - setup - docs: add commit backlog from a verified audit of the repo
 - 2026-10-21 - A1 - fix: make Ledger.verify() report damaged ledger files instead of crashing
 - 2026-10-31 - A2 - fix: treat non-finite confidence as 0.0 in the validator
+- 2026-11-10 - A3 - fix: refuse edit/reject decisions whose keep indexes match no proposal

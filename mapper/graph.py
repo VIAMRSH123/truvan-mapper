@@ -43,6 +43,22 @@ class MapState(TypedDict, total=False):
     status: str                      # approved | edited | rejected
 
 
+def _check_keep(action, decision: Decision, n: int) -> None:
+    """Refuse indexes that point at no proposal, so a typo can't erase a control's mappings.
+
+    The error propagates to the caller and nothing reaches the ledger. LangGraph keeps the
+    failed resume value pending for that thread, so start a fresh thread to retry.
+    """
+    if action not in ("edit", "reject"):
+        return
+    keep = decision.get("keep", [])
+    bad = [i for i in keep if isinstance(i, bool) or not isinstance(i, int) or not 0 <= i < n]
+    if bad:
+        raise ValueError(f"Invalid keep indexes {bad}: there are {n} proposals (0..{n - 1}).")
+    if action == "edit" and not keep:
+        raise ValueError("An edit must keep at least one proposal; use reject to discard them all.")
+
+
 def build_graph(proposer: Proposer, ledger: Ledger, max_attempts: int = 3,
                 checkpointer=None):
 
@@ -68,6 +84,7 @@ def build_graph(proposer: Proposer, ledger: Ledger, max_attempts: int = 3,
             "dropped": state.get("dropped", []),
         })
         action = decision.get("action")
+        _check_keep(action, decision, len(state["proposals"]))
         history = state.get("history", []) + [{
             "attempt": state["attempt"],
             "proposer": proposer.name,
